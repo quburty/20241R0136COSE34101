@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define PROC_NUM 5
 #define MAX_TIME 99
@@ -29,6 +30,7 @@ typedef struct _Scheduling {
 } Scheduling;
 
 void Create_Process(Process** p_arr) {
+    srand((unsigned)time(NULL));
 
     char method = 'n';
     printf("Randomly create process, ok? [y/n]: ");
