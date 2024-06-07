@@ -5,6 +5,7 @@
 #include <time.h>
 
 #define PROC_NUM 5
+#define JOB_MAX_NUM 20
 #define MAX_TIME 99
 
 #define QUANTUM 2
@@ -39,17 +40,17 @@ void Create_Process(Process** p_arr) {
     for (int i = 0; i < PROC_NUM; i++) {
         Process* p = (Process*)malloc(sizeof(Process));
 
-        if(method == 'y' || method == 'Y')
+        if (method == 'y' || method == 'Y')
         {
-        p->pid = rand() % 1000 + 1;
-        p->arrival_time = rand() % 10 + 1;
-        p->cpu_burst_time = rand() % 5 + 1;
-        p->priority = rand() % 5 + 1;
+            p->pid = rand() % 1000 + 1;
+            p->arrival_time = rand() % 10 + 1;
+            p->cpu_burst_time = rand() % 5 + 1;
+            p->priority = rand() % 5 + 1;
         }
         else
         {
             printf("write pid, arrival time, burst time, priority: ");
-            scanf("%d %d %d %d", &p->pid,&p->arrival_time,&p->cpu_burst_time, &p->priority);
+            scanf("%d %d %d %d", &p->pid, &p->arrival_time, &p->cpu_burst_time, &p->priority);
         }
 
         p_arr[i] = p;
@@ -60,7 +61,7 @@ void Create_Process(Process** p_arr) {
 
 void schedule_fcfs(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
     scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM);
@@ -124,7 +125,7 @@ void schedule_fcfs(Process** p_data, Scheduling* scheduling) {
 
 void schedule_priority(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
     scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM);
@@ -188,7 +189,7 @@ void schedule_priority(Process** p_data, Scheduling* scheduling) {
 
 void schedule_sjf(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
     scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM);
@@ -252,12 +253,12 @@ void schedule_sjf(Process** p_data, Scheduling* scheduling) {
 
 void schedule_rr(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
-    scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->start_time[i] = -1; }
-    scheduling->end_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->end_time[i] = -1; }
-    scheduling->p_idx = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->p_idx[i] = -1; }
+    scheduling->start_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->start_time[i] = -1; }
+    scheduling->end_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->end_time[i] = -1; }
+    scheduling->p_idx = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->p_idx[i] = -1; }
 
     int done[PROC_NUM] = { 0, };
 
@@ -331,12 +332,12 @@ void schedule_rr(Process** p_data, Scheduling* scheduling) {
 
 void schedule_sjf_preemptive(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
-    scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->start_time[i] = -1; }
-    scheduling->end_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->end_time[i] = -1; }
-    scheduling->p_idx = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->p_idx[i] = -1; }
+    scheduling->start_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->start_time[i] = -1; }
+    scheduling->end_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->end_time[i] = -1; }
+    scheduling->p_idx = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->p_idx[i] = -1; }
 
     int done[PROC_NUM] = { 0, };
 
@@ -366,7 +367,7 @@ void schedule_sjf_preemptive(Process** p_data, Scheduling* scheduling) {
             scheduling->order_len++;
         }
         else {
-            if (current_left == 0) { 
+            if (current_left == 0) {
                 done[current_idx] = 1;
                 scheduling->end_time[scheduling->order_len - 1] = time;
                 current_left = -1;
@@ -391,12 +392,12 @@ void schedule_sjf_preemptive(Process** p_data, Scheduling* scheduling) {
 
 void schedule_priority_preemptive(Process** p_data, Scheduling* scheduling) {
     Process* p_arr[PROC_NUM];
-    for(int i=0;i<PROC_NUM;i++){p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i])=(*p_data[i]);}
+    for (int i = 0; i < PROC_NUM; i++) { p_arr[i] = (Process*)malloc(sizeof(Process)); (*p_arr[i]) = (*p_data[i]); }
 
     scheduling->order_len = 0;
-    scheduling->start_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->start_time[i] = -1; }
-    scheduling->end_time = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->end_time[i] = -1; }
-    scheduling->p_idx = (int*)malloc(sizeof(int) * PROC_NUM); for (int i = 0; i < PROC_NUM; i++) { scheduling->p_idx[i] = -1; }
+    scheduling->start_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->start_time[i] = -1; }
+    scheduling->end_time = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->end_time[i] = -1; }
+    scheduling->p_idx = (int*)malloc(sizeof(int) * JOB_MAX_NUM); for (int i = 0; i < JOB_MAX_NUM; i++) { scheduling->p_idx[i] = -1; }
 
     int done[PROC_NUM] = { 0, };
 
@@ -416,7 +417,7 @@ void schedule_priority_preemptive(Process** p_data, Scheduling* scheduling) {
             }
         }
         if (idx != -1 && current_idx != -1 && p_arr[current_idx]->priority > p_arr[idx]->priority && current_left > 0)
-        { 
+        {
             p_arr[current_idx]->cpu_burst_time = current_left;
             scheduling->end_time[scheduling->order_len - 1] = time;
             current_idx = idx;
@@ -476,16 +477,14 @@ void evaluation(Process** p_arr, Scheduling* scheduling) {
     printf("Scheduling %d: %f\n", 0, scheduling->avg_turnaround_time);
 }
 
-void display_gantt(Scheduling* scheduling) {
+void display_gantt(Process** p_arr, Scheduling* scheduling) {
     int last_end_time = 0;
-    printf("\n");
     for (int i = 0; i < scheduling->order_len; i++) {
-        if(scheduling->start_time[i]!=last_end_time)
-        {
-            printf("|Wait(%d)", scheduling->start_time[i]-last_end_time);
-        }
+        if (scheduling->start_time[i] != last_end_time)
+            printf("|Wait(%d)", scheduling->start_time[i] - last_end_time);
 
-        printf("│ P%d(%d) ", scheduling->p_idx[i], scheduling->end_time[i] - scheduling->start_time[i]);
+        int idx = scheduling->p_idx[i];
+        printf("│ P%d(%d) ", p_arr[idx]->pid, scheduling->end_time[i] - scheduling->start_time[i]);
         last_end_time = scheduling->end_time[i];
     }
     printf("│\n\n");
@@ -495,7 +494,7 @@ int main()
 {
     Process** p_arr = (Process**)malloc(sizeof(Process*) * PROC_NUM);
     Create_Process(p_arr);
-    
+
     Scheduling* scheduling_fcfs = (Scheduling*)malloc(sizeof(Scheduling));
     Scheduling* scheduling_sjf = (Scheduling*)malloc(sizeof(Scheduling));
     Scheduling* scheduling_sjf_preemption = (Scheduling*)malloc(sizeof(Scheduling));
@@ -505,7 +504,7 @@ int main()
 
     int num = 0;
 
-    while(1)
+    while (1)
     {
         printf("----choose algorithm----");
         printf("1.fcfs\t2.sjf\t3.sjf_preempt\n");
@@ -517,32 +516,32 @@ int main()
         case 1:
             schedule_fcfs(p_arr, scheduling_fcfs);
             evaluation(p_arr, scheduling_fcfs);
-            display_gantt(scheduling_fcfs);
+            display_gantt(p_arr, scheduling_fcfs);
             break;
         case 2:
             schedule_sjf(p_arr, scheduling_sjf);
             evaluation(p_arr, scheduling_sjf);
-            display_gantt(scheduling_sjf);
+            display_gantt(p_arr, scheduling_sjf);
             break;
         case 3:
             schedule_sjf_preemptive(p_arr, scheduling_sjf_preemption);
             evaluation(p_arr, scheduling_sjf_preemption);
-            display_gantt(scheduling_sjf_preemption);
+            display_gantt(p_arr, scheduling_sjf_preemption);
             break;
         case 4:
             schedule_priority(p_arr, scheduling_priority);
             evaluation(p_arr, scheduling_priority);
-            display_gantt(scheduling_priority);
+            display_gantt(p_arr, scheduling_priority);
             break;
         case 5:
             schedule_priority_preemptive(p_arr, scheduling_priority_preemption);
             evaluation(p_arr, scheduling_priority_preemption);
-            display_gantt(scheduling_priority_preemption);
+            display_gantt(p_arr, scheduling_priority_preemption);
             break;
         case 6:
             schedule_rr(p_arr, scheduling_rr);
             evaluation(p_arr, scheduling_rr);
-            display_gantt(scheduling_rr);
+            display_gantt(p_arr, scheduling_rr);
             break;
         case 0:
             return 0;
